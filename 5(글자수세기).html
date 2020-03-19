@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script>
+        var 입력="";
+       window.onload=function(){
+           var 글자=document.getElementById("ttt");
+           setInterval(function(){
+               글자.innerHTML=입력.length
+           },50);
+           
+       }
+        
+    </script>
+    
+</head>
+<body>
+    <textarea style="height:100px; width:100%" onkeyup="입력 = this.value.toString()"></textarea>
+    <h2 id="ttt"></h2>
+</body>
+</html>
