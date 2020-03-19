@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script>
+       var stime=0;
+        var 정지시각=0;
+        var 재생 = false;
+        var 현재시간=0;
+        
+        window.onload=function(){
+            var 시간표시 = document.getElementById("ttime");
+            setInterval(function(){
+               현재시간 = Number(new Date()) - stime;
+                if(재생) 시간표시.innerHTML=(현재시간)/1000;
+            },1);
+        }
+        
+        var 초기화=function(){
+            재생=false;
+            stime=0;
+            document.getElementById("ttime").innerHTML=0;
+        }
+        
+        var 멈춤=function(){
+            재생=!재생;
+            if (재생){
+                if (stime==0) stime=Number(new Date());
+                else stime+=(Number(new Date())-정지시각);
+            } 
+            else 정지시각=Number(new Date());
+        }
+        
+        
+        var 기록=function(){
+            
+            var 시간=document.createElement('ul');
+            if(재생)시간.innerHTML=현재시간/1000;
+            else 시간.innerHTML=(정지시각-stime)/1000;
+            시간.className="timetimelist"
+            document.body.appendChild(시간);
+        }
+        
+    </script>
+    
+</head>
+<body>
+    
+    <button onclick="멈춤()">정지/재셍</button>
+    <button onclick="초기화()">초기화</button>
+    <button onclick="기록()">기록</button>
+    <h1 id="ttime">0</h1>
+    <div id="timelist"></div>
+</body>
+</html>
