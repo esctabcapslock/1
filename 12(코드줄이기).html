@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    
+    <style>
+        @font-face{
+            font-family: 'D2Coding';
+            src: url(./D2Coding-Ver1.3.2-20180524.ttf) format('truetype');
+        }
+        
+        *{
+            font-family: D2Coding;
+        }
+        
+        #ttt{
+            font-family: D2Coding;
+            width: 100%;
+            height:300px;
+            
+        }
+        
+        #입력{
+            width: 47.5%;
+            float: left;
+            padding: 1%;
+        }
+        
+        #출력{
+            width: 47.5%;
+            float: left;
+            padding: 1%;
+   
+        }
+        textarea{
+            position: relative;
+            top: 10px;
+            overflow: hidden;
+        }
+        
+        #header{
+            display: block;
+            font-size: 20px;
+            padding: 10px;
+        }
+    
+        #cht{
+            padding-left: 10px;
+        }
+
+    
+    </style>
+    
+    <script>
+        function 주석제거(문자){
+            let f = 0; 
+            for (var i=0; i<문자.length;){
+                if(문자[i]=='/' && 문자[i+1]=='/')f=2;
+                else if(문자[i]=='\n') f=0;
+                else if (f<2) f=0;
+                else{}
+                문자[i]='ㄱ';
+                if(f==2){
+                    문자 = 문자.substring(0,i)+문자.substring(i+1,문자.length);
+                }
+                else i++;
+                //console.log(i,문자[i],f);
+            }
+            //console.log(문자);
+            return 문자;
+        }
+        
+        
+         
+        function text_copy(){
+           
+          var nontext = document.createElement('textarea');
+          nontext.value = document.getElementById("ttt").value.replace(/&gt;/g,'>').replace(/\&lt;/g,'<').replace(/&amp;/g,'&');
+          document.body.append(nontext);
+        
+          nontext.select();
+          var a = document.execCommand('copy');
+          nontext.remove();
+        //console.log('복사',a);
+            //https://horangi.tistory.com/3
+        }
+        
+        
+    
+    
+    </script>
+</head>
+<body>
+   <strong id="header">코드 축약기</strong><div id="cht">___</div><br>
+   <div id="창">
+   <div id="입력">
+   <span>입력</span>
+    <textarea style="height:300px; width:100%" id="pagelink" onkeyup="change(this.value)"></textarea>
+    
+    </div>
+    
+    <div id="출력">
+    <span>출력  </span><input  type="button" onclick="text_copy();" value="복사버튼">
+    <div id="codereslt"><textarea  style="height:300px; width:100%"  id="ttt"></textarea></div>
+    
+    </div>
+    </div>
+    <script>
+    function change (입력값){
+    입력값 = 주석제거(입력값);//.replace(/>/g,'&gt;').replace(/</g,'\&lt;'); //HTML 내부 용으로 전환
+    var 줄인값 = 입력값.toString().replace(/\t/g,'').replace(/\n\}([\n]+)/g,'\}').replace(/\n[\n]+/g,'').replace(/\{[\n]+/g,'\{').replace(/for \(/g,'for\(').replace(/^\s+|\s+$/g,'').replace(/^\n+|\n+$/g,'').replace(/;[\n]+/g,';').replace(/\s*\(\s*/g,'\(').replace(/\s*\)\s*/g,'\)').replace(/\s*\+\s*/g,'\+').replace(/\s*\-\s*/g,'\-').replace(/\s*\\\s*/g,'\\').replace(/\s*\*\s*/g,'\*').replace(/\s*\=\s*/g,'\=').replace(/\s*\&\s*/g,'\&').replace(/\s*\^\s*/g,'\^').replace(/\s*\|\s*/g,'\|').replace(/\s*\!\s*/g,'\!').replace(/\s*\{\s*/g,'\{').replace(/\s*\}\s*/g,'\}').replace(/\s\s+/g,' ');
+ 
+    document.getElementById("ttt").value = 줄인값.replace(/\.h&gt;/g,'\.h&gt;\n');
+    let 퍼센테이지 = Math.round((1-줄인값.length/입력값.length)*10000)/100;
+    if (isNaN(퍼센테이지)) 퍼센테이지 = 0;
+        
+    document.getElementById("cht").innerHTML = `${퍼센테이지}% ___  ${입력값.length} => ${줄인값.length} `;
+
+        //console.log(document.getElementById("ttt").innerHTML);
+    }
+        
+    //setInterval(높이조절,1000/50);
+    document.body.addEventListener('keydown',높이조절);
+    function 높이조절(e){
+        var 글목록 = document.getElementsByTagName("textarea");
+        
+        for (var i in 글목록){
+        
+        글목록[i].style.height = "1px";
+        //sif (1+글목록[i].scrollHeight > 300)
+        글목록[i].style.height = (10+글목록[i].scrollHeight)+"px";
+            
+        if (1+글목록[i].scrollHeight < 300) 글목록[i].style.height = "300px";
+        }
+    }
+    
+    </script>
+    
+    
+   
+
+</body>
+</html>
