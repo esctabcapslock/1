@@ -71,7 +71,30 @@
         }
         
         
-         
+        function 헤더(문자){
+            let f = 0; 
+            let shap = 0;
+            for (var i=0; i<문자.length;){
+                if((문자[i]=='\"') || (문자[i]=='\'')) f++;
+                if (!(f%2) && 문자[i]=='#') shap = 1;
+                if (shap==1 && (문자[i]=='\>' || 문자[i]=='&gt;') && 문자[i+1]!='\n'){
+                    if (문자[i-1]=='\n' && (문자[i-2]=='\>' || 문자[i-2]=='&gt;')){
+                        문자 = 문자.substring(0,i)+'\n'+문자.substring(i+1,문자.length);
+                    }
+                    else 문자 = 문자.substring(0,i+1)+'\n'+문자.substring(i+1,문자.length);
+                    i+=2;
+                    shap = 0;
+                }
+                
+                else i++;
+                //console.log(i,문자[i],f);
+            }
+            
+            
+            //console.log(문자);
+            return 문자;//.replace(/\s*#\s*/g,'#');
+        }
+        
         function text_copy(){
            
           var nontext = document.createElement('textarea');
@@ -108,9 +131,9 @@
     <script>
     function change (입력값){
     입력값 = 주석제거(입력값);//.replace(/>/g,'&gt;').replace(/</g,'\&lt;'); //HTML 내부 용으로 전환
-    var 줄인값 = 입력값.toString().replace(/\t/g,'').replace(/\n\}([\n]+)/g,'\}').replace(/\n[\n]+/g,'').replace(/\{[\n]+/g,'\{').replace(/for \(/g,'for\(').replace(/^\s+|\s+$/g,'').replace(/^\n+|\n+$/g,'').replace(/;[\n]+/g,';').replace(/\s*\(\s*/g,'\(').replace(/\s*\)\s*/g,'\)').replace(/\s*\+\s*/g,'\+').replace(/\s*\-\s*/g,'\-').replace(/\s*\\\s*/g,'\\').replace(/\s*\*\s*/g,'\*').replace(/\s*\=\s*/g,'\=').replace(/\s*\&\s*/g,'\&').replace(/\s*\^\s*/g,'\^').replace(/\s*\|\s*/g,'\|').replace(/\s*\!\s*/g,'\!').replace(/\s*\{\s*/g,'\{').replace(/\s*\}\s*/g,'\}').replace(/\s\s+/g,' ');
+    var 줄인값 = 입력값.toString().replace(/\t/g,'').replace(/\n\}([\n]+)/g,'\}').replace(/\n[\n]+/g,'').replace(/\{[\n]+/g,'\{').replace(/for \(/g,'for\(').replace(/^\s+|\s+$/g,'').replace(/^\n+|\n+$/g,'').replace(/;[\n]+/g,';').replace(/\s*\(\s*/g,'\(').replace(/\s*\)\s*/g,'\)').replace(/\s*\+\s*/g,'\+').replace(/\s*\-\s*/g,'\-').replace(/\s*\\\s*/g,'\\').replace(/\s*\*\s*/g,'\*').replace(/\s*\=\s*/g,'\=').replace(/\s*\&\s*/g,'\&').replace(/\s*\^\s*/g,'\^').replace(/\s*\|\s*/g,'\|').replace(/\s*\!\s*/g,'\!').replace(/\s*\?\s*/g,'\?').replace(/\s*\:\s*/g,'\:').replace(/\s*\{\s*/g,'\{').replace(/\s*\}\s*/g,'\}').replace(/\s\s+/g,' ');
  
-    document.getElementById("ttt").value = 줄인값.replace(/\.h&gt;/g,'\.h&gt;\n');
+    document.getElementById("ttt").value = 헤더(줄인값)//.replace(/\.h&gt;/g,'\.h&gt;\n').replace(/\.h>/g,'\.h>\n');
     let 퍼센테이지 = Math.round((1-줄인값.length/입력값.length)*10000)/100;
     if (isNaN(퍼센테이지)) 퍼센테이지 = 0;
         
@@ -124,7 +147,7 @@
     function 높이조절(e){
         var 글목록 = document.getElementsByTagName("textarea");
         
-        for (var i in 글목록){
+        for (var i in 글목록) if (글목록[i].style) {
         
         글목록[i].style.height = "1px";
         //sif (1+글목록[i].scrollHeight > 300)
