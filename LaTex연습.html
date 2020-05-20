@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!--http://www.hostmath.com/ 참조할것-->
+
 <head>
 
     <meta charset="UTF-8">
@@ -17,10 +18,10 @@
             var a = document.execCommand('copy');
             nontext.remove();
         }
-        
-       function text_delete(){
-           input.value="";
-       }
+
+        function text_delete() {
+            input.value = "";
+        }
 
         window.MathJax = {
             loader: {
@@ -28,12 +29,14 @@
             }
         };
 
-    </script>
+    </script>    
+    <script id="MathJax-script" async src="./MathJax-master/es5/tex-mml-chtml.js"></script>
 
     <style>
-        body{
-        overflow-x: hidden;
+        body {
+            overflow-x: hidden;
         }
+
         @font-face {
             font-family: 'D2Coding';
             src: url(./D2Coding-Ver1.3.2-20180524.ttf) format('truetype');
@@ -45,7 +48,7 @@
 
     </style>
 
-    <script id="MathJax-script" async src="./MathJax-master/es5/tex-mml-chtml.js"></script>
+
     <!--입력창-->
     <style>
         #h2 {
@@ -121,30 +124,33 @@
         }
 
     </style>
-    
+
     <!--위키링크-->
     <style>
-        #위키링크{
+        #위키링크 {
             margin-left: 30px;
             color: green;
             text-decoration-line: none;
         }
-        #위키링크:hover{
+
+        #위키링크:hover {
             color: greenyellow;
             text-decoration-line: none;
         }
-        #위키링크:visited{
+
+        #위키링크:visited {
             text-decoration-line: none;
             color: green;
         }
+
     </style>
 </head>
 
 
 <body>
     <!-- \( \LaTeX \lim_{x \to m} \beta \alpha \theta \) -->
-    
-    <a  id="위키링크" href="https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:TeX_%EB%AC%B8%EB%B2%95#%EB%B9%88%EC%B9%B8%EC%A1%B0%EC%A0%95">wiki 설명서</a>
+
+    <a id="위키링크" href="https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:TeX_%EB%AC%B8%EB%B2%95#%EB%B9%88%EC%B9%B8%EC%A1%B0%EC%A0%95">wiki 설명서</a>
     <h2>\begin{pmatrix}수 & 식 \\변 & 환\end{pmatrix}</h2>
     <div id="입력버튼">
         <div class="종류">
@@ -305,33 +311,33 @@
         input.addEventListener("paste", change_fn);
         input.addEventListener("keydown", edit_fn);
         input.addEventListener("keydown", change_fn);
-        
+
 
         document.getElementById("변환전").addEventListener("keydown", MathJax.tex2chtml);
-        
-        
+
+
         function change_fn(e) {
             //output.innerHTML = `\\( ${input.innerHTML.trim().replace(/<br>/g,'')}\\)`;
-            
-            output.innerHTML="\\("+input.value.trim()+"\\)"
-            
-            //MathJax.typeset([output]);
-            MathJax.typesetPromise([output]);
-            
+
+            output.innerHTML = "\\(" + input.value.trim() + "\\)"
+
+            MathJax.typeset([output]);
+            //MathJax.typesetPromise([output]);
+
             //output.innerHTML="";
-         //output.appendChild(MathJax.tex2chtmlPromise(input.value.trim()));
+            //output.appendChild(MathJax.tex2chtmlPromise(input.value.trim()));
         }
 
         function edit_fn(e) {
-            
+
             //console.log(input.innerHTML);
             console.log(e);
 
-            if (e.ctrlKey||e.altKey) {
-                if(e.key!='v')e.returnValue = false;//브라우저키 무효화
-                
+            if (e.ctrlKey || e.altKey) {
+                if (e.key != 'v' && e.key != 'c') e.returnValue = false; //브라우저키 무효화
+
                 console.log(e.key);
-                var 넣을값="";
+                var 넣을값 = "";
                 if (e.key == 'o') 넣을값 = "{ \\over } " + ' ';
                 if (e.key == ' ') 넣을값 = "\\;" + ' ';
                 if (e.key == 't') 넣을값 = "\\times" + ' ';
@@ -345,10 +351,10 @@
                     change_fn();
                     return;
                 }
-                let v=input.value;
-                let p=input.selectionStart;
-                input.value=v.substring(0,p)+넣을값+v.substring(p,v.length);
-                 change_fn();
+                let v = input.value;
+                let p = input.selectionStart;
+                input.value = v.substring(0, p) + 넣을값 + v.substring(p, v.length);
+                change_fn();
             }
         }
 
@@ -359,10 +365,10 @@
 
         function edit_click_fn(e) {
             //console.log(this);
-            
-            let v=input.value;
-            let p=input.selectionStart;
-            input.value=v.substring(0,p)+this.title+" "+v.substring(p,v.length);
+
+            let v = input.value;
+            let p = input.selectionStart;
+            input.value = v.substring(0, p) + this.title + " " + v.substring(p, v.length);
             change_fn();
             /*
             input.innerHTML = input.innerHTML.replace(/<br>/g, '') + this.title + ' ';
@@ -376,7 +382,7 @@
 
     </script>
     <div>
-       
+
     </div>
 </body>
 
