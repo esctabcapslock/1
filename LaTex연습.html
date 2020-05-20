@@ -2,7 +2,7 @@
 <!--http://www.hostmath.com/ 참조할것-->
 
 <head>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>LaTex 수식 변환기</title>
 
@@ -29,7 +29,7 @@
             }
         };
 
-    </script>    
+    </script>
     <script id="MathJax-script" async src="./MathJax-master/es5/tex-mml-chtml.js"></script>
 
     <style>
@@ -334,14 +334,14 @@
             console.log(e);
 
             if (e.ctrlKey || e.altKey) {
-                if (e.key != 'v' && e.key != 'c') e.returnValue = false; //브라우저키 무효화
+                if (e.key != 'v' && e.key != 'c'&& e.key != 'a') e.returnValue = false; //브라우저키 무효화
 
                 console.log(e.key);
                 var 넣을값 = "";
                 if (e.key == 'o') 넣을값 = "{ \\over } " + ' ';
                 if (e.key == ' ') 넣을값 = "\\;" + ' ';
                 if (e.key == 't') 넣을값 = "\\times" + ' ';
-                if (e.key == 'a') 넣을값 = "\\forall" + ' ';
+                if (e.key == 'f') 넣을값 = "\\forall" + ' ';
                 if (e.key == 'e') 넣을값 = "\\exists" + ' ';
                 if (e.key == 'N') 넣을값 = " \\mathbb{N}" + ' ';
                 if (e.key == 'Z') 넣을값 = "\\mathbb{Z}" + ' ';
