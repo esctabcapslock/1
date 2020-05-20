@@ -67,7 +67,7 @@
 
         #변환 {
             position: absolute;
-            top: 280px;
+            top: 250px;
             z-index: 10;
             width: 100%;
 
@@ -96,8 +96,8 @@
     <style>
         #입력버튼>div {
             background-color: beige;
-            padding: 10px;
-            margin: 20px;
+            padding: 8px;
+            margin: 4px;
             float: left;
             display: inline-block;
         }
@@ -111,7 +111,8 @@
         }
 
         #입력버튼>div>.내용>div {
-            padding: 5px 0;
+            padding: 1px 0;
+            margin: 0;
         }
 
 
@@ -144,6 +145,17 @@
         }
 
     </style>
+    
+    
+    
+<!--설명문-->
+    <style>
+        #설명문{
+            display: inline-block;
+            position: relative;
+            top: 450px;
+        }
+    </style>
 </head>
 
 
@@ -151,7 +163,10 @@
     <!-- \( \LaTeX \lim_{x \to m} \beta \alpha \theta \) -->
 
     <a id="위키링크" href="https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:TeX_%EB%AC%B8%EB%B2%95#%EB%B9%88%EC%B9%B8%EC%A1%B0%EC%A0%95">wiki 설명서</a>
-    <h2>\begin{pmatrix}수 & 식 \\변 & 환\end{pmatrix}</h2>
+    <h2>\begin{pmatrix} {\color{Blue}수} & {\color{Red}식} \\{\color{Green}변} & {\color{Orange}환}\end{pmatrix}
+    
+    </h2>
+    <div id="입력버튼_wrap">
     <div id="입력버튼">
         <div class="종류">
             <div class="타이틀">백터</div>
@@ -181,7 +196,7 @@
             </div </div>
         </div>
         <div class="종류">
-            <div class="타이틀">미적분</div>
+            <div class="타이틀">미적</div>
             <div class="내용">
                 <div id="" title="\operatorname{d}">\( \operatorname{d}□\)</div>
                 <div id="" title="\partial">\(\partial □ \)</div>
@@ -218,7 +233,7 @@
             </div </div>
         </div>
         <div class="종류">
-            <div class="타이틀">연산자</div>
+            <div class="타이틀">+-×÷</div>
             <div class="내용">
                 <div id="" title="+">\( +\)</div>
                 <div id="" title="-">\( -\)</div>
@@ -227,7 +242,9 @@
                 <div id="" title="\times">\(\times \)</div>
                 <div id="" title="\cdot">\(\cdot \)</div>
                 <div id="" title="\div">\(\div \)</div>
+                <div id="" title="\circㄴ">\(\circ \)</div>
                 <div id="" title="\star">\(\star \)</div>
+                <div id="" title="\backslash">\(\backslash \)</div>
             </div </div>
         </div>
         <div class="종류">
@@ -266,8 +283,8 @@
                 <div id="" title="\nexists">\(\nexists \)</div>
                 <div id="" title="\therefore">\(\therefore \)</div>
                 <div id="" title="\because">\(\because \)</div>
-                <div id="" title="\And">\(\And \)</div>
-                <div id="" title="\Or">\(\Or \)</div>
+                <div id="" title="\land">\(\land \)</div>
+                <div id="" title="\lor">\(\lor \)</div>
             </div </div>
         </div>
         <div class="종류">
@@ -299,8 +316,8 @@
     </div>
     <div id="변환">
         <textarea id="변환전" class="변환" contenteditable></textarea>
-        <input id="복사버튼" type="button" onclick="text_copy();" value="복사버튼">
-        <input id="삭제버튼" type="button" onclick="text_delete(); change_fn();" value="삭제버튼">
+        <input id="복사버튼" type="button" onclick="text_copy();" value="복사 ctrl+s">
+        <input id="삭제버튼" type="button" onclick="text_delete(); change_fn();" value="삭제 ctrl+d">
         <div id="변환후" class="변환" contenteditable>\begin{pmatrix}2 & 3 \\1 & 2\end{pmatrix}</div>
     </div>
 
@@ -311,7 +328,6 @@
         input.addEventListener("paste", change_fn);
         input.addEventListener("keydown", edit_fn);
         input.addEventListener("keydown", change_fn);
-
 
         document.getElementById("변환전").addEventListener("keydown", MathJax.tex2chtml);
 
@@ -331,13 +347,14 @@
         function edit_fn(e) {
 
             //console.log(input.innerHTML);
-            console.log(e);
+            //누른 키 출력 console.log(e);
 
             if (e.ctrlKey || e.altKey) {
-                if (e.key != 'v' && e.key != 'c'&& e.key != 'a') e.returnValue = false; //브라우저키 무효화
+                if (e.key != 'x' && e.key != 'v' && e.key != 'c'&& e.key != 'a') e.returnValue = false; //브라우저키 무효화
 
-                console.log(e.key);
+                console.log("ctrl",e.key);
                 var 넣을값 = "";
+                
                 if (e.key == 'o') 넣을값 = "{ \\over } " + ' ';
                 if (e.key == ' ') 넣을값 = "\\;" + ' ';
                 if (e.key == 't') 넣을값 = "\\times" + ' ';
@@ -345,10 +362,15 @@
                 if (e.key == 'e') 넣을값 = "\\exists" + ' ';
                 if (e.key == 'N') 넣을값 = " \\mathbb{N}" + ' ';
                 if (e.key == 'Z') 넣을값 = "\\mathbb{Z}" + ' ';
+                if (e.key == 'Q') 넣을값 = "\\mathbb{Q}" + ' ';
                 if (e.key == 'C') 넣을값 = "\\mathbb{C}" + ' ';
                 if (e.key == 'd') {
                     text_delete();
                     change_fn();
+                    return;
+                }
+                if (e.key == 's') {
+                    text_copy();
                     return;
                 }
                 let v = input.value;
@@ -381,9 +403,31 @@
         }
 
     </script>
+    
     <div>
 
     </div>
+    <div id="설명문">
+       <h5>단축키</h5>
+       
+        공백: ctrl+스패이스바<br>
+        복사: ctrl+s<br>
+        전체삭제: ctrl+d<br>
+        \( \forall\): ctrl+f<br>
+        \( \exists\): ctrl+e<br>
+        \( \mathbb{N}\): ctrl+shift+n<br>
+        \( \mathbb{Z}\): ctrl+shift+z<br>
+        \( \mathbb{Q}\): ctrl+shift+q<br>
+        \( \mathbb{C}\): ctrl+shift+c<br>
+        분수: ctrl+o<br>
+        
+        선택항목 : ctrl+c<br>
+        잘라내기: ctrl+x<br>
+        붙여넣기: ctrl+v<br>
+        전체선택: ctrl+a<br>
+        
+    </div>
+    
 </body>
 
 </html>
