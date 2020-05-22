@@ -3,8 +3,9 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./L.png">
     <meta charset="UTF-8">
-    <title>LaTex 수식 변환기</title>
+    <title>LaTeX 수식 변환기</title>
 
     <script>
         window.onload = function() {}
@@ -327,7 +328,7 @@
 
         input.addEventListener("paste", change_fn);
         input.addEventListener("keydown", edit_fn);
-        input.addEventListener("keydown", change_fn);
+        input.addEventListener("keyup", change_fn);
 
         document.getElementById("변환전").addEventListener("keydown", MathJax.tex2chtml);
 
@@ -350,7 +351,7 @@
             //누른 키 출력 console.log(e);
 
             if (e.ctrlKey || e.altKey) {
-                if (e.key != 'x' && e.key != 'v' && e.key != 'c'&& e.key != 'a') e.returnValue = false; //브라우저키 무효화
+                if (e.key != 'z' && e.key != 'x' && e.key != 'v' && e.key != 'c'&& e.key != 'a') e.returnValue = false; //브라우저키 무효화
 
                 console.log("ctrl",e.key);
                 var 넣을값 = "";
