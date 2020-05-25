@@ -340,6 +340,7 @@
         input.addEventListener("paste", change_fn);
         input.addEventListener("keydown", edit_fn);
         input.addEventListener("keyup", change_fn);
+        document.body.addEventListener("keydown",edit_fn)
 
         document.getElementById("변환전").addEventListener("keydown", MathJax.tex2chtml);
 
